@@ -48,6 +48,9 @@ $.ajax({
 // }, function(errorObject) {
 //  console.log("The read failed: " + errorObject.code); });
 
+
+//the API key is
+  // -H 'X-Mashape-Key: 4FEmgcoC9ZmshcPhJktTGdDBvHuEp1JalbejsnAA3CFG66uu08'
 // how to set a value in the database
 
 // database.ref().set({
@@ -76,6 +79,39 @@ function buildQueryURL() {
     // anything else we need to build the query goes here...
     return queryURL;
   }
+
+var apiKey = "R5NltYxgLvkdgZgiIxEU35EwTBeQnBVKKug8qEhq";
+var ndbno = "01009";
+var type = "b";
+var format = "json";
+
+//var url = "http://api.nal.usda.gov/ndb/reports/?ndbno=" + ndbno + "&type=" + type + "&format=" + format + "&api_key=" + apiKey;
+
+var url = "http://api.yummly.com/v1/api/recipes?_app_id=2dff9c1b_app_key=12039102b6b8cfd732dcffcd64c93f2e&salt"
+$.get(url, function( data ) {
+    //alert( "Data Loaded: " + JSON.stringify(data) )
+    console.log(data);
+    console.log(data.report.food.name);
+    console.log(data.report.food.nutrients[6].name);
+    //console.log(data.report.food.nutrient)
+  });
+
+ 
+  var ingredients = [];
+  //for (var i = 0; i < ingredients.length; i++);
+  ingredients.push($("#pageSubmenu.input").val().trim());
+
+  console.log(ingredients);
+
+  var energy = '';
+  $.each(food0.nutrient, function () {
+      if (this.name == 'Energy') {
+          energy = this.value;
+  
+         return false; // == break; return true == continue;
+      }
+  })
+
 
 
   // we're going to have to make our API call using CURL url https://stackoverflow.com/questions/36756014/using-curl-to-make-ajax-call

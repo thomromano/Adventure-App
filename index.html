@@ -24,28 +24,24 @@
 
 <body>
 
-
-
-
-
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h1>Recipe App</h1>
+                <h1>Adventure Planner</h1>
             </div>
 
             <ul class="list-unstyled components">
 
 
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Ingredients</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Zip Code</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <br>
                         <form>
                             <label>
 
-                                <p class="input-text"><input type="text" placeholder="What's in your fridge?"></p>
+                                <p class="input-text"><input type="text" class = "zipCode" placeholder="Enter US Zip Code"></p>
                         </form>
                             </label>
 
@@ -53,7 +49,7 @@
                 </li>
                 <li>
 
-                    <a href="#pageDietmenu" data-toggle="collapse" aria-expanded="false">Dietary Preferences</a>
+                    <a href="#pageDietmenu" data-toggle="collapse" aria-expanded="false">TBD</a>
                     <ul class="collapse list-unstyled" id="pageDietmenu">
                         <li>
                             <form class="form-check">
@@ -113,7 +109,7 @@
 
 
                     <li>
-                        <a href="#pageCalmenu" data-toggle="collapse" aria-expanded="false">Calorie Requirements</a>
+                        <a href="#pageCalmenu" data-toggle="collapse" aria-expanded="false">TBD</a>
                         <ul class="collapse list-unstyled" id="pageCalmenu">
                             <li>
                                 <a href="#">
@@ -132,8 +128,11 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">Order Take-Out</a>
                     </li>
+                    <div>
+                            <button type="button" id = "getAdventure" class="btn btn-info">Get my Adventure!</button>
+                    </div>
+
             </ul>
 
 
@@ -192,7 +191,6 @@
         let slider = document.getElementById("myRange");
         let output = document.getElementById("calorieSlider");
         output.innerHTML = slider.value;
-
         slider.oninput = function () {
             output.innerHTML = this.value;
         }

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Rikkihon/GroupProject#readme",
   "dependencies": {
     "browser-sync": "^2.23.6",
+    "foodweb": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-html-beautify": "^1.0.1",
