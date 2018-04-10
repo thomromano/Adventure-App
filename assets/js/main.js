@@ -46,90 +46,19 @@ $(document).ready(function() {
     });
     let queryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:" + zipCode + "&key=" + geoCodeKey;
 
-    // if(isNaN(zipCode)){
-    //     $("#pageSubmenu").append("Please enter your number for a zip code");
-    //   }
-
     $.ajax({
       url: queryURL,
       method: "GET",
       dataType: "json",
       success: function(response){
-    //   console.log(response);
             latitude = response.results[0].geometry.location.lat;
             longitude= response.results[0].geometry.location.lng;
-            // console.log("Lat = "+latitude+"- Long = "+longitude);
-            // console.log("returnzip inside the func is " + returnZip);
             map.setCenter({lat: latitude, lng: longitude});
-            google.maps.event.addListener(map,'bounds_changed', function(event) {
-                // init nearbySearch
-                function callback(results, status) {
-                    if(status == google.maps.places.PlacesServiceStatus.OK){
-                        for (var i = 0; i < results.length; i++){
-                            // markers.push(createMarker(results[i]));
-                        }
-                    }
-                }
-                //finds the type of place once the user location is determined
-                request = {
-                    location: map.getCenter(),
-                    radius: 6000,
-                    types: ['zoo'],
-                };
-                // puts the locations on the map
-                service.nearbySearch(request, callback);           
-            })
       }
       
     });
     
   }
-
-//   function getCoordinates(location) {
-    
-//     // read the value of gck from the database
-//     database.ref().on("value", function(snapshot) {
-//       let geoCodeKey = snapshot.val().gck;
-//     //   console.log("gck is " + geoCodeKey);
-//       return geoCodeKey;
-//     });
-//     let queryURL = "https://maps.googleapis.com/maps/api/geocode/json?components=city:" + location + "&key=" + geoCodeKey;
-
-//     $.ajax({
-//       url: queryURL,
-//       method: "GET",
-//       dataType: "json",
-//       success: function(response){
-//     //   console.log(response);
-//             latitude = response.results[0].geometry.location.lat;
-//             longitude= response.results[0].geometry.location.lng;
-//             // console.log("Lat = "+latitude+"- Long = "+longitude);
-//             // console.log("returnzip inside the func is " + returnZip);
-//             map.setCenter({lat: latitude, lng: longitude});
-//             google.maps.event.addListener(map,'bounds_changed', function(event) {
-//                 // init nearbySearch
-//                 function callback(results, status) {
-//                     if(status == google.maps.places.PlacesServiceStatus.OK){
-//                         for (var i = 0; i < results.length; i++){
-//                             markers.push(createMarker(results[i]));
-//                         }
-//                     }
-//                 }
-//                 //finds the type of place once the user location is determined
-//                 request = {
-//                     location: map.getCenter(),
-//                     radius: 6000,
-//                     types: ['museum'],
-//                 };
-//                 // puts the locations on the map
-//                 service.nearbySearch(request, callback);           
-//             })
-//       }
-      
-//     });
-    
-//   }
-
     // Handles the zipcode Errors
     function zipErrorHandling() {
         let message, x;
@@ -166,46 +95,11 @@ $(document).ready(function() {
         });
     })
 
-    // if ($.isNumeric(zipCode)) {
-    //     //  console.log(true);
-    // }
-    // else {
-    //     $("#pageSubmenu").append("Please enter your number for a zip code");
-    // }
-
-    //started this for the autocomplete on locationCenter input
-    // $(function(data) {
-    //     $(".locationCenter").keydown(function(event) {
-    //         event.preventDefault();
-    //         if (event.keyCode===13) {
-    //             $("#getAdventure").trigger('click');
-    //         }
-    //     });
-    // })
-
     $(function() {
         $("form").submit(function() { 
         return false; 
         });
     });
-
-    // This autocompletes the locationCenter input field
-
-    // const input = document.getElementById('locationCenter');
-    // // maps.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-    // const autocomplete = new google.maps.places.Autocomplete(input,{types: ['(cities)']});
-
-    // let locationAutoComplete = "";
-    //    $(".locationCenter").geocomplete();
-    //     // Trigger geocoding request by hitting enter on the city field in the HTML
-    //     $(".locationCenter").on("submit", function(event) {
-    //         event.preventDefault();
-    //         // console.log("Is this working?");
-    //     // keydown(function(event) {
-    //     //     if (event.keyCode===13){
-    //     //        city = $(".city").val(); }
-    //     //     console.log(city);
-    //     });
 
     $('#pageSubmenu').on('click', function (event){
         event.preventDefault();
@@ -226,53 +120,17 @@ $(document).ready(function() {
             infowindow.open(map, newMark);
             })
         }
-
+        let classificationName = "&classificationName=";
+        let familyFriendly = "";
+        let infowindow;
         function ticketMaster(){
-            let classificationName = "&classificationName=";
-            let familyFriendly = "";
-            if(document.getElementById('cboxcon').checked) {
-                console.log("Music,")
-                classificationName+="Music,"
-                // adds "Music" to classificationName array
-                $('#cboxcon').prop('checked', false);
-            }
-            if(document.getElementById('cboxsport').checked) {
-                classificationName+="Sports,"
-                $('#cboxsport').prop('checked', false);
-            }
-            if(document.getElementById('cboxart').checked) {
-                classificationName+="Arts,"
-                // adds  "Arts" to classificationName array
-                $('#cboxart').prop('checked', false);
-            }
-            if(document.getElementById('cboxfamily').checked) {
-                console.log("family checked")
-                familyFriendly = "&includeFamily=yes";
-                // adds includeFamily=yes to the queryString
-                $('#cboxfamily').prop('checked', false);
-            }
-        // });
-            console.log("classificationName is " + classificationName)
-    
-            // end event cateogory logic
-    
-            // $('#getAdventure').on("click", function (event) {
-            // event.preventDefault();
-            // let cityLocation = $(".locationCenter").val();
-            // city.push(cityLocation);
-            // console.log(cityLocation);
-            // getCoordinates(cityLocation);
-    
-            // $('.locationCenter').val('');
-    
-        // TICKETMASTER SECTION!!!!!!!!!!!!!! 
+            
+        // get the ticketmaster API key from the database    
         database.ref().on("value", function(snapshot) {
             tmk = snapshot.val().tmk;
-            console.log("tmk is " + tmk);
             let eventCategory = "";
             const radius = 25;
             const unit = "miles"
-    
             var today = new Date();
             var dd = today.getDate();
             var tmdd = today.getDate()+1;
@@ -290,6 +148,8 @@ $(document).ready(function() {
             if(mm<10) {
                 mm = '0'+mm
             } 
+
+           
     
             let todayString = `${yyyy}-${mm}-${dd}T00:00:00Z`
             console.log("todayString is " + todayString)
@@ -308,10 +168,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function(results){
                 console.log(results);
-                //for (var i=0; i<2;i++)
-                //{
-               //console.log("the name of event number " + [i] + " is " + eventName)
-            //    $(".footer").prepend('<ul class="list-group">');}
             for (var i=0; i<results._embedded.events.length;i++)
             {
                     let eventLat = results._embedded.events[i]._embedded.venues[0].location.latitude;
@@ -329,11 +185,6 @@ $(document).ready(function() {
                         lat: parseInt(eventLat),
                         lng: parseInt(eventLong)
                     }
-            
-                   // $(".footer").append('<ul class="list-group"><li class="list-group-item"><img class="media-object" alt="ticketmaster event image" src ="' + eventImage+'"</img><h3>'+eventName+'</h3></li></ul></div>');
-                   // $(".footer").append('<tr><td><img class="media-object" alt="ticketmaster event image" src ="' + eventImage+'"</img><h3>'+eventName+'</h3></td></tr>');
-        
-                     //}
                      iconImage = new google.maps.MarkerImage('./assets/img/icon1.png', null, null, null, new google.maps.Size(45, 45));
                      let newMark = new google.maps.Marker({
                         position: {lat: parseFloat(eventLat),
@@ -343,12 +194,6 @@ $(document).ready(function() {
                          icon: iconImage,
                          title: eventName
                        });
-                       
-                       var infowindow = new google.maps.InfoWindow({
-                        content: '<img src="' + eventImage +'"' + 'alt="TicketMaster Image; style = "center"; height="65"; width="120";>'+ '<p style = center; color #999>' + eventName + '</p>'
-                    });
-    
-                      bindInfoWindow(newMark,map,infowindow);
                 }
     
                 
@@ -369,8 +214,6 @@ $(document).ready(function() {
         $('.zipCode').val('');
         ticketMaster();
 
-        let classificationName = "&classificationName=";
-        let familyFriendly = "";
         if(document.getElementById('cboxcon').checked) {
             console.log("Music,")
             classificationName+="Music,"
@@ -480,14 +323,14 @@ $(document).ready(function() {
                      icon: iconImage,
                      title: eventName
                    });
-                   
-                   var infowindow = new google.maps.InfoWindow({
+                    infowindow = new google.maps.InfoWindow({
                    content: '<img src="' + eventImage +'"' + 'alt="TicketMaster Image;" class = "concerts;"  id="concerts"; style = align:"middle"; height="65"; width="120";>'+ '<p style = center; color #999>' + eventName + '</p>'
                   });
                   bindInfoWindow(newMark,map,infowindow);
             }
-
-            
+            // reset the classification name and family friendly variables for the next run through
+            classificationName = "&classificationName=";
+            familyFriendly = "";
         }});  
     });
     });
@@ -502,6 +345,8 @@ $(document).ready(function() {
 
     //     $('.locationCenter').val('');
     // });
+   
+    
     
 
 // end of document ready
@@ -612,24 +457,6 @@ function initialize() {
             }
           ]
     });
-    infoWindow = new google.maps.InfoWindow();
-    service = new google.maps.places.PlacesService(map);
-
-    // init nearbySearch
-    function callback(results, status) {
-        if(status == google.maps.places.PlacesServiceStatus.OK){
-            for (var i = 0; i < results.length; i++){
-                // markers.push(createMarker(results[i]));
-            }
-        }
-    }
-    //finds the type of place once the user location is determined
-    request = {
-        location: map.getCenter(),
-        radius: 6000,
-        types: ['zoo'],
-    };
-    // service.nearbySearch(request, callback);
 
     // recenter map around user's location
     if (navigator.geolocation) {
@@ -638,22 +465,11 @@ function initialize() {
             lat: position.coords.latitude,
             lng: position.coords.longitude
             };
-            infoWindow.setPosition(pos);
             map.setCenter(pos);
-
-            newRequest = {
-                location: pos,
-                radius: 5000,
-                types: ['zoo'],
-            };
-            service.nearbySearch(newRequest, callback);
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
         });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-        }
+    } 
 
     // recenter the map and reload the places after the map has been dragged and released
     map.addListener('dragend', function() {
@@ -661,15 +477,6 @@ function initialize() {
     //   console.log(event);
         map.getCenter()
     //   console.log(map.getCenter());
-        clearResults(markers)
-        let request = {
-            location: map.getCenter(),
-            radius: 5000,
-            types: ['zoo']
-        };
-        service.nearbySearch(request, callback);
-        return service.nearbySearch(request, callback);
-
     })
 }
 // function callback(results, status) {
@@ -712,5 +519,4 @@ function clearResults(markers) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
 

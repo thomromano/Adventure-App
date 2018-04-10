@@ -507,6 +507,14 @@ MEDIAQUERIES
         
     }
 
+    #concerts {
+        height: 65px;
+        width: 120px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .footer {
         position: fixed;
         left: 0;
@@ -529,4 +537,11 @@ MEDIAQUERIES
         margin-left: 310px;
     }
     
+    #concerts {
+        height: 65px;
+        width: 120px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
  }
