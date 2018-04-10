@@ -152,7 +152,7 @@ $(document).ready(function() {
             let latlong = latitude + ","  + longitude;
             console.log("latlong is " + latlong)
         
-        const eventQueryURL = `http://app.ticketmaster.com/discovery/v2/events.json?apikey=${tmk}&keyword=${eventCategory}&geoPoint=${latlong}&radius=${radius}&unit=${unit}&startDateTime=${todayString}&endDateTime=${tomorrowString}${classificationName}${familyFriendly}`;
+        const eventQueryURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${tmk}&keyword=${eventCategory}&geoPoint=${latlong}&radius=${radius}&unit=${unit}&startDateTime=${todayString}&endDateTime=${tomorrowString}${classificationName}${familyFriendly}`;
         console.log(eventQueryURL)
         $.ajax({
             url: eventQueryURL,
